@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%; /* 1rem = 10px */
+    scroll-behavior: smooth;
+}
+
+:root {
+    /* Colors - Charcoal Drawing Theme */
+    --color-paper: #fcfaf5;
+    --color-charcoal: #2c2c2c;
+    --color-graphite: #4a4a4a;
+    --color-sketch: #6b6b6b;
+    --color-accent: #8b7355;
+    
+    /* Typography */
+    --font-main: 'Kalam', cursive;
+    --font-heading: 'Caveat', cursive;
+}
+
+/* Base Styles */
+body {
+    font-size: 1.6rem;
+    font-family: var(--font-main);
+    color: var(--color-charcoal);
+    background-color: var(--color-paper);
+    background-image: url('images/clean-gray-paper.png');
+    background-repeat: repeat;
+    background-size: 400px 400px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    margin-bottom: 1.6rem;
+}
+
+h1 { font-size: 4.8rem; }
+h2 { font-size: 3.6rem; }
+h3 { font-size: 2.4rem; }
+
+a {
+    text-decoration: none;
+    color: var(--color-charcoal);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+button {
+    border: none;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+/* Header */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.6rem;
+    position: relative;
+    background-color: var(--color-paper);
+}
+
+.logo {
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+
+/* Hamburger Button */
+.nav-toggle {
+    display: block;
+    padding: 0.8rem;
+}
+
+.hamburger {
+    display: block;
+    width: 2.5rem;
+    height: 0.2rem;
+    background-color: var(--color-charcoal);
+    position: relative;
+}
+
+.hamburger::before {
+    content: '';
+    position: absolute;
+    width: 2.5rem;
+    height: 0.2rem;
+    background-color: var(--color-charcoal);
+    top: -0.8rem;
+    left: 0;
+}
+
+.hamburger::after {
+    content: '';
+    position: absolute;
+    width: 2.5rem;
+    height: 0.2rem;
+    background-color: var(--color-charcoal);
+    top: 0.8rem;
+    left: 0;
+}
+
+/* Nav Menu */
+ul.nav-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 1.6rem;
+    background-color: var(--color-paper);
+    border-bottom: 2px solid var(--color-sketch);
+}
+
+ul.nav-menu.active {
+    display: block !important;
+}
+
+.nav-menu li {
+    margin-bottom: 1.6rem;
+}
+
+.nav-menu a {
+    display: block;
+    padding: 1.2rem;
+    font-size: 1.8rem;
+    text-align: center;
+    color: var(--color-charcoal);
+}
+
+.nav-menu a:hover {
+    text-decoration: underline;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    .nav-toggle {
+        display: none;
+    }
+    
+    ul.nav-menu {
+        display: flex !important;
+        position: static;
+        border-bottom: none;
+        padding: 0;
+        gap: 2.4rem;
+    }
+    
+    .nav-menu li {
+        margin-bottom: 0;
+    }
+    
+    .nav-menu a {
+        padding: 0.8rem 1.6rem;
+        font-size: 1.6rem;
+    }
+}
