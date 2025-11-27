@@ -124,7 +124,6 @@ ul.nav-menu {
     left: 0;
     right: 0;
     padding: 1.6rem;
-    border-bottom: 2px solid var(--color-sketch);
 }
 
 ul.nav-menu.active {
