@@ -33,6 +33,12 @@ body {
     background-size: 400px 400px;
 }
 
+.content {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     margin: 1.6rem 0;
