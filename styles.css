@@ -146,13 +146,20 @@ ul.nav-menu.active {
     text-decoration: underline;
 }
 
+/* Sections */
+section {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
 /* Project Grid */
 .project-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 3rem;
-    padding: 2rem 0;
+    padding: 1.6rem;
 }
 
 .project-card {
