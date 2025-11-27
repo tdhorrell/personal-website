@@ -149,6 +149,31 @@ ul.nav-menu.active {
     text-decoration: underline;
 }
 
+/* Project Grid */
+.project-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    padding: 2rem 0;
+}
+
+.project-card {
+    flex: 1 1 300px;
+    max-width: 400px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+}
+
+.project-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;      /* Prevents image stretching */
+    margin-bottom: 1.5rem;
+}
+
 /* Desktop */
 @media (min-width: 768px) {
     .nav-toggle {
@@ -172,3 +197,6 @@ ul.nav-menu.active {
         font-size: 1.6rem;
     }
 }
+
+
+
