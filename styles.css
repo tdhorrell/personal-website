@@ -75,7 +75,6 @@ button {
     align-items: center;
     padding: 1.6rem;
     position: relative;
-    background-color: var(--color-paper);
 }
 
 .logo {
@@ -125,7 +124,6 @@ ul.nav-menu {
     left: 0;
     right: 0;
     padding: 1.6rem;
-    background-color: var(--color-paper);
     border-bottom: 2px solid var(--color-sketch);
 }
 
@@ -197,6 +195,5 @@ ul.nav-menu.active {
         font-size: 1.6rem;
     }
 }
-
 
 
