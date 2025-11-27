@@ -171,6 +171,14 @@ ul.nav-menu.active {
     margin-bottom: 1.5rem;
 }
 
+/* Header */
+.site-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.6rem;
+}
+
 /* Desktop */
 @media (min-width: 768px) {
     .nav-toggle {
