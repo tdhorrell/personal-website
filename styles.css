@@ -135,6 +135,10 @@ ul.nav-menu {
     left: 0;
     right: 0;
     padding: 1.6rem;
+    background-color: var(--color-paper);
+    background-image: url('images/clean-gray-paper.png');
+    background-repeat: repeat;
+    background-size: 400px 400px;
 }
 
 ul.nav-menu.active {
