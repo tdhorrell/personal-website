@@ -43,7 +43,7 @@ body {
 section {
     display: flex;
     flex-direction: column;
-    padding: 2rem;
+    padding: 1rem 3rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -211,7 +211,6 @@ ul.nav-menu.active {
     flex-wrap: wrap;
     justify-content: center;
     gap: 3rem;
-    padding: 1.6rem;
 }
 
 .project-card {
