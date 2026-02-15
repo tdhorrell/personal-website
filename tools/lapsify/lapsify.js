@@ -216,7 +216,7 @@ function addVignette(imageData, cfg) {
 
 const downloadBtn = document.getElementById("download");
 
-// Helper to detect if user is on a phone/tablet
+// mobile helper
 function isMobileDevice() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
@@ -224,12 +224,12 @@ function isMobileDevice() {
 if (downloadBtn) {
   downloadBtn.onclick = () => {
     
-    // Convert canvas to a "Blob" (image file in memory)
+    // blob convert
     filteredCanvas.toBlob(async (blob) => {
       const fileName = "lapsified-image.png";
       const file = new File([blob], fileName, { type: "image/png" });
 
-      // PATH A: MOBILE (Try Native Share Sheet first)
+      // mobile devices
       if (isMobileDevice() && navigator.share && navigator.canShare({ files: [file] })) {
         try {
           await navigator.share({
@@ -237,15 +237,13 @@ if (downloadBtn) {
             title: 'Lapsify Image',
             text: 'Here is my lapsified image!'
           });
-          return; // Stop here if share worked
+          return;
         } catch (error) {
           console.log("Share failed or closed, falling back to download.", error);
-          // If share fails (or user cancels), we let it fall through to Path B
         }
       }
 
-      // PATH B: DESKTOP (Standard Download)
-      // This also runs if Mobile Share fails
+      // desktop
       const link = document.createElement("a");
       link.download = fileName;
       link.href = URL.createObjectURL(blob);
