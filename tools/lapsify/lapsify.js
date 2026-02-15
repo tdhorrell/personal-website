@@ -216,36 +216,46 @@ function addVignette(imageData, cfg) {
 
 const downloadBtn = document.getElementById("download");
 
-if (downloadBtn) {
-  downloadBtn.onclick = async () => {
-    
-    // Check if the browser supports native sharing (Mobile phones mostly)
-    if (navigator.share) {
-      try {
-        // Convert canvas to a "Blob" (a file-like object)
-        filteredCanvas.toBlob(async (blob) => {
-          const file = new File([blob], "lapsified.png", { type: "image/png" });
-          
-          // Share data
-          const shareData = {
-            files: [file],
-          };
+// Helper to detect if user is on a phone/tablet
+function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
 
-          // Open the native share sheet
-          await navigator.share(shareData);
-        });
-      } catch (err) {
-        console.error("Share failed:", err);
-      }
-    } 
+if (downloadBtn) {
+  downloadBtn.onclick = () => {
     
-    // Fallback for Desktop (or browsers without Share API)
-    else {
+    // Convert canvas to a "Blob" (image file in memory)
+    filteredCanvas.toBlob(async (blob) => {
+      const fileName = "lapsified-image.png";
+      const file = new File([blob], fileName, { type: "image/png" });
+
+      // PATH A: MOBILE (Try Native Share Sheet first)
+      if (isMobileDevice() && navigator.share && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: 'Lapsify Image',
+            text: 'Here is my lapsified image!'
+          });
+          return; // Stop here if share worked
+        } catch (error) {
+          console.log("Share failed or closed, falling back to download.", error);
+          // If share fails (or user cancels), we let it fall through to Path B
+        }
+      }
+
+      // PATH B: DESKTOP (Standard Download)
+      // This also runs if Mobile Share fails
       const link = document.createElement("a");
-      link.download = "lapsified.png";
-      link.href = filteredCanvas.toDataURL("image/png");
+      link.download = fileName;
+      link.href = URL.createObjectURL(blob);
+      document.body.appendChild(link);
       link.click();
-    }
+      document.body.removeChild(link);
+      
+      // Clean up memory
+      setTimeout(() => URL.revokeObjectURL(link.href), 100);
+    }, "image/png");
   };
 }
 
