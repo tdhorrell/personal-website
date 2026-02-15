@@ -24,10 +24,22 @@
     align-items: center;
 }
 
+.lapsify-canvas {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 1.5rem;
+}
+
 .lapsify-actions {
     display: flex;
     justify-content: space-between;
     width: 100%
+}
+
+/* utility class to hide elements */
+.hidden {
+    display: none !important;
 }
 
 @media (min-width: 768px) {

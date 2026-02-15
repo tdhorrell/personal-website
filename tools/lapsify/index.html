@@ -28,21 +28,26 @@
     <section id="lapsify" class="lapsify content">
         <h1>lapsify image tool</h1>
         
-        <input type="file" id="upload" accept="image/*">
+        <input type="file" id="hiddenInput" accept="image/*" style="display: none">
+
+        <button id="initial-upload-button" class="lapsify-primary-button">
+            select an image
+        </button>
 
         <div class="lapsify-comparison">
             <div class="lapsify-original-image">
                 <h3>original</h3>
-                <canvas id="originalCanvas" class="tool-canvas"></canvas>
+                <canvas id="originalCanvas" class="lapsify-canvas"></canvas>
             </div>
             <div class="lapsify-filtered-image">
                 <h3>lapsified</h3>
-                <canvas id="filteredCanvas" class="tool-canvas"></canvas>
+                <canvas id="filteredCanvas" class="lapsify-canvas"></canvas>
             </div>
         </div>
 
-        <div class="lapsify-actions">
-            <button id="download">download updated image</button>
+        <div class="lapsify-actions hidden">
+            <button id="download">download</button>
+            <button id="upload-new-button" class="lapsify-secondary-button">upload new</button>
             <a href="../../index.html" class="lapsify-home-button">
                 go home →
             </a>

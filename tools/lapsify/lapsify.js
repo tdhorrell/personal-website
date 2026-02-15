@@ -1,7 +1,12 @@
-const upload = document.getElementById("upload");
+const hiddenInput = document.getElementById("hiddenInput");
+
+const initialUploadBtn = document.getElementById("initial-upload-button");
+const uploadNewBtn = document.getElementById("upload-new-button");
+
+const actionsPanel = document.querySelector(".lapsify-actions");
+
 const originalCanvas = document.getElementById("originalCanvas");
 const filteredCanvas = document.getElementById("filteredCanvas");
-
 const originalCtx = originalCanvas.getContext("2d");
 const filteredCtx = filteredCanvas.getContext("2d");
 
@@ -18,14 +23,32 @@ const config = {
   vignetteStrength: 0.4
 };
 
+// =========================
+// BUTTON LOGIC
+// =========================
+
+if (initialUploadBtn) {
+  initialUploadBtn.addEventListener("click", () => {
+    hiddenInput.click();
+  });
+}
+
+if (uploadNewBtn) {
+  uploadNewBtn.addEventListener("click", () => {
+    hiddenInput.click();
+  });
+}
 
 // =========================
 // IMAGE UPLOAD
 // =========================
 
-upload.addEventListener("change", event => {
+hiddenInput.addEventListener("change", event => {
   const file = event.target.files[0];
   if (!file) return;
+
+  if (initialUploadBtn) initialUploadBtn.classList.add("hidden");
+  actionsPanel.classList.remove("hidden");
 
   const img = new Image();
 
@@ -52,6 +75,8 @@ upload.addEventListener("change", event => {
   };
 
   img.src = URL.createObjectURL(file);
+
+  hiddenInput.value = "";
 });
 
 
