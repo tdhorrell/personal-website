@@ -5,12 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Tim's Tools">
     <title>Tim's Tools</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/lapsify.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
+    <header class="site-header">
+        <div class="logo">tim.</div>
+        <nav class="main-nav">
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="#about">about</a></li>
+                <li><a href="#projects">projects</a></li>
+                <li><a href="#contact">contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <h1>Warmify Image Tool</h1>
     <input type="file" id="upload" accept="image/*">
 
@@ -26,6 +42,6 @@
     </div>
 
     <button id="download">Download Updated Image</button>
-    <script src="warmify.js"></script>
+    <script src="lapsify.js"></script>
 </body>
 </html>
