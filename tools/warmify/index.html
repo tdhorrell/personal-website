@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tim's Tools">
+    <title>Tim's Tools</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Warmify Image Tool</h1>
+    <input type="file" id="upload" accept="image/*">
+
+    <div class="comparison">
+        <div>
+            <h3>Original</h3>
+            <canvas id="originalCanvas" class="tool-canvas"></canvas>
+        </div>
+        <div>
+            <h3>Warmified</h3>
+            <canvas id="filteredCanvas" class="tool-canvas"></canvas>
+        </div>
+    </div>
+
+    <button id="download">Download Updated Image</button>
+    <script src="warmify.js"></script>
+</body>
+</html>
