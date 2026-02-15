@@ -214,12 +214,40 @@ function addVignette(imageData, cfg) {
 // DOWNLOAD
 // =========================
 
-document.getElementById("download").onclick = () => {
-  const link = document.createElement("a");
-  link.download = "lapsified.png";
-  link.href = filteredCanvas.toDataURL("image/png");
-  link.click();
-};
+const downloadBtn = document.getElementById("download");
+
+if (downloadBtn) {
+  downloadBtn.onclick = async () => {
+    
+    // Check if the browser supports native sharing (Mobile phones mostly)
+    if (navigator.share) {
+      try {
+        // Convert canvas to a "Blob" (a file-like object)
+        filteredCanvas.toBlob(async (blob) => {
+          const file = new File([blob], "lapsified.png", { type: "image/png" });
+          
+          // Share data
+          const shareData = {
+            files: [file],
+          };
+
+          // Open the native share sheet
+          await navigator.share(shareData);
+        });
+      } catch (err) {
+        console.error("Share failed:", err);
+      }
+    } 
+    
+    // Fallback for Desktop (or browsers without Share API)
+    else {
+      const link = document.createElement("a");
+      link.download = "lapsified.png";
+      link.href = filteredCanvas.toDataURL("image/png");
+      link.click();
+    }
+  };
+}
 
 
 // =========================
