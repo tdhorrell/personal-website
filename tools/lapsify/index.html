@@ -25,21 +25,23 @@
         </nav>
     </header>
 
-    <h1>warmify image tool</h1>
-    <input type="file" id="upload" accept="image/*">
+    <section id="lapsify" class="lapsify content">
+        <h1>lapsify image tool</h1>
+        <input type="file" id="upload" accept="image/*">
 
-    <div class="comparison">
-        <div>
-            <h3>original</h3>
-            <canvas id="originalCanvas" class="tool-canvas"></canvas>
+        <div class="comparison">
+            <div>
+                <h3>original</h3>
+                <canvas id="originalCanvas" class="tool-canvas"></canvas>
+            </div>
+            <div>
+                <h3>lapsified</h3>
+                <canvas id="filteredCanvas" class="tool-canvas"></canvas>
+            </div>
         </div>
-        <div>
-            <h3>lapsified</h3>
-            <canvas id="filteredCanvas" class="tool-canvas"></canvas>
-        </div>
-    </div>
 
-    <button id="download">download updated image</button>
+        <button id="download">download updated image</button>
+    </section>
 
     <section id="contact" class="contact content">
         <h2>contact</h2>
