@@ -20,28 +20,40 @@
                 <span class="hamburger"></span>
             </button>
             <ul class="nav-menu">
-                <li><a href="#about">about</a></li>
-                <li><a href="#projects">projects</a></li>
-                <li><a href="#contact">contact</a></li>
+                <li><a href="../../index.html">home</a></li>
             </ul>
         </nav>
     </header>
 
-    <h1>Warmify Image Tool</h1>
+    <h1>warmify image tool</h1>
     <input type="file" id="upload" accept="image/*">
 
     <div class="comparison">
         <div>
-            <h3>Original</h3>
+            <h3>original</h3>
             <canvas id="originalCanvas" class="tool-canvas"></canvas>
         </div>
         <div>
-            <h3>Warmified</h3>
+            <h3>lapsified</h3>
             <canvas id="filteredCanvas" class="tool-canvas"></canvas>
         </div>
     </div>
 
-    <button id="download">Download Updated Image</button>
+    <button id="download">download updated image</button>
+
+    <section id="contact" class="contact content">
+        <h2>contact</h2>
+        <ul class="contact-links">
+            <li><a href="https://github.com/tdhorrell" target="_blank" rel="noopener noreferrer">Github</a></li>
+            <li><a href="https://www.linkedin.com/in/timothy-horrell" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="mailto:td.horrell11@gmail.com">Email</a></li>
+        </ul>
+    </section>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 Tim Horrell. All rights reserved.</p>
+    </footer>
+
     <script src="lapsify.js"></script>
 </body>
 </html>
