@@ -27,9 +27,10 @@
 
     <section id="lapsify" class="lapsify content">
         <h1>lapsify image tool</h1>
+        
         <input type="file" id="upload" accept="image/*">
 
-        <div class="comparison">
+        <div class="lapsify-comparison">
             <div>
                 <h3>original</h3>
                 <canvas id="originalCanvas" class="tool-canvas"></canvas>
@@ -40,7 +41,12 @@
             </div>
         </div>
 
-        <button id="download">download updated image</button>
+        <div class="lapsify-actions">
+            <button id="download">download updated image</button>
+            <a href="../../index.html" class="lapsify-home-button">
+                go home →
+            </a>
+        </div>
     </section>
 
     <section id="contact" class="contact content">
