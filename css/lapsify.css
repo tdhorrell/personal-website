@@ -5,5 +5,34 @@
 4. Add handrawn border frames for images
 */
 
+.lapsify {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lapsify-comparison {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.lapsify-original-image, .lapsify-filtered-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lapsify-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%
+}
+
 @media (min-width: 768px) {
+    .lapsify-comparison {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
 }
