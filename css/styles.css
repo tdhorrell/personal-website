@@ -32,6 +32,9 @@ body {
     background-repeat: repeat;
     background-size: 400px 400px;
     min-height: 100vh;
+    opacity: 0.92;
+    text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.15);
+    filter: blur(0.25px);
 }
 
 .content {
