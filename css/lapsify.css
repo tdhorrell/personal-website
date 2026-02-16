@@ -54,7 +54,8 @@ body {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: 2rem;
+    margin: 2rem 0rem;
 }
 
 .lapsify-primary-button, .lapsify-secondary-button, .lapsify-download-button, .lapsify-home-button{
