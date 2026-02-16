@@ -237,14 +237,19 @@ function addGrainFloat(float) {
 // =========================
 
 function addVignetteFloat(float, width, height) {
+  const strength = 0.25; // lower = softer vignette
+
   for (let y = 0; y < height; y++) {
     const ny = (y / height) * 2 - 1;
 
     for (let x = 0; x < width; x++) {
       const nx = (x / width) * 2 - 1;
 
-      const radius = Math.sqrt(nx * nx + ny * ny);
-      const mask = Math.max(0.5, 1 - 0.5 * radius);
+      // stretch radius so effect starts farther out
+      const radius = Math.sqrt(nx * nx + ny * ny) * 0.7;
+
+      // smoother curve (quadratic falloff)
+      const mask = 1 - strength * radius * radius;
 
       const i = (y * width + x) * 4;
 
