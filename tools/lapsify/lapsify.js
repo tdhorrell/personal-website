@@ -93,123 +93,169 @@ function applyLapsify() {
     filteredCanvas.height
   );
 
-  imageData = applyWarmTone(imageData, config);
-  imageData = applyFade(imageData, config);
-  imageData = applyBlur(imageData, config);
-  imageData = addGrain(imageData, config);
-  imageData = addVignette(imageData, config);
+  const width = filteredCanvas.width;
+  const height = filteredCanvas.height;
+
+  let float = toFloatImage(imageData);
+
+  float = applyWarmToneFloat(float, width, height);
+  float = applyFadeFloat(float);
+  float = gaussianBlurFloat(float, width, height);
+  float = addGrainFloat(float);
+  float = addVignetteFloat(float, width, height);
+
+  imageData = fromFloatImage(float, imageData);
 
   filteredCtx.putImageData(imageData, 0, 0);
 }
 
+// =========================
+// FLOAT HELPERS
+// =========================
+
+function toFloatImage(imageData) {
+  const float = new Float32Array(imageData.data.length);
+
+  for (let i = 0; i < imageData.data.length; i++) {
+    float[i] = imageData.data[i] / 255;
+  }
+
+  return float;
+}
+
+function fromFloatImage(float, imageData) {
+  for (let i = 0; i < float.length; i++) {
+    imageData.data[i] = Math.max(0, Math.min(255, float[i] * 255));
+  }
+
+  return imageData;
+}
+
 
 // =========================
-// EFFECT FUNCTIONS
+// Warm tone
 // =========================
 
-function applyWarmTone(imageData, cfg) {
-  const data = imageData.data;
+function applyWarmToneFloat(float, width, height) {
+  for (let i = 0; i < float.length; i += 4) {
+    const r = float[i];
+    const g = float[i + 1];
+    const b = float[i + 2];
 
-  for (let i = 0; i < data.length; i += 4) {
-    data[i] = Math.min(255, data[i] * cfg.warmth);
-    data[i + 2] *= 0.9;
+    float[i]     = 1.05 * r + 0.02 * g;
+    float[i + 1] = g;
+    float[i + 2] = 0.02 * g + 0.95 * b;
   }
 
-  return imageData;
+  return float;
 }
 
 
-function applyFade(imageData, cfg) {
-  const data = imageData.data;
+// =========================
+// Fade
+// =========================
 
-  for (let i = 0; i < data.length; i += 4) {
-    for (let c = 0; c < 3; c++) {
-      let v = data[i + c];
-      v = v * (1 - cfg.fadeAmount) + 255 * cfg.fadeAmount;
-      data[i + c] = v;
-    }
+function applyFadeFloat(float) {
+  for (let i = 0; i < float.length; i += 4) {
+    float[i]     = float[i] * 0.85 + 0.08;
+    float[i + 1] = float[i + 1] * 0.85 + 0.08;
+    float[i + 2] = float[i + 2] * 0.85 + 0.08;
   }
 
-  return imageData;
+  return float;
 }
 
 
-// Simple box blur (fast + mobile friendly)
-function applyBlur(imageData, cfg) {
-  const radius = cfg.blurRadius;
-  if (radius <= 0) return imageData;
+// =========================
+// Gaussian blur
+// =========================
 
-  const { width, height, data } = imageData;
-  const copy = new Uint8ClampedArray(data);
+function gaussianBlurFloat(float, width, height) {
+  const kernel = [1, 2, 1];
+  const norm = 4;
 
-  for (let y = radius; y < height - radius; y++) {
-    for (let x = radius; x < width - radius; x++) {
+  const temp = new Float32Array(float.length);
+  const output = new Float32Array(float.length);
 
-      let r = 0, g = 0, b = 0, count = 0;
-
-      for (let dy = -radius; dy <= radius; dy++) {
-        for (let dx = -radius; dx <= radius; dx++) {
-          const idx = ((y + dy) * width + (x + dx)) * 4;
-          r += copy[idx];
-          g += copy[idx + 1];
-          b += copy[idx + 2];
-          count++;
-        }
-      }
-
-      const i = (y * width + x) * 4;
-      data[i] = r / count;
-      data[i + 1] = g / count;
-      data[i + 2] = b / count;
-    }
-  }
-
-  return imageData;
-}
-
-
-function addGrain(imageData, cfg) {
-  const data = imageData.data;
-
-  for (let i = 0; i < data.length; i += 4) {
-    const noise = (Math.random() - 0.5) * cfg.grainStrength;
-
-    data[i] += noise;
-    data[i + 1] += noise;
-    data[i + 2] += noise;
-  }
-
-  return imageData;
-}
-
-
-function addVignette(imageData, cfg) {
-  const { width, height, data } = imageData;
-
-  const centerX = width / 2;
-  const centerY = height / 2;
-  const maxDist = Math.sqrt(centerX**2 + centerY**2);
-
+  // horizontal pass
   for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
+    for (let x = 1; x < width - 1; x++) {
+      for (let c = 0; c < 3; c++) {
+        const i = (y * width + x) * 4 + c;
 
-      const dx = x - centerX;
-      const dy = y - centerY;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-
-      const factor = 1 - (dist / maxDist) * cfg.vignetteStrength;
-
-      const i = (y * width + x) * 4;
-
-      data[i] *= factor;
-      data[i + 1] *= factor;
-      data[i + 2] *= factor;
+        temp[i] =
+          (float[i - 4] * kernel[0] +
+           float[i]     * kernel[1] +
+           float[i + 4] * kernel[2]) / norm;
+      }
     }
   }
 
-  return imageData;
+  // vertical pass
+  for (let y = 1; y < height - 1; y++) {
+    for (let x = 0; x < width; x++) {
+      for (let c = 0; c < 3; c++) {
+        const i = (y * width + x) * 4 + c;
+
+        output[i] =
+          (temp[i - width * 4] * kernel[0] +
+           temp[i]             * kernel[1] +
+           temp[i + width * 4] * kernel[2]) / norm;
+      }
+    }
+  }
+
+  for (let i = 0; i < float.length; i += 4) {
+    float[i]     = float[i]     * 0.7 + output[i]     * 0.3;
+    float[i + 1] = float[i + 1] * 0.7 + output[i + 1] * 0.3;
+    float[i + 2] = float[i + 2] * 0.7 + output[i + 2] * 0.3;
+  }
+
+  return float;
 }
 
+
+// =========================
+// Grain
+// =========================
+
+function addGrainFloat(float) {
+  for (let i = 0; i < float.length; i += 4) {
+    const noise = (Math.random() - 0.5) * 0.04;
+
+    float[i]     += noise;
+    float[i + 1] += noise;
+    float[i + 2] += noise;
+  }
+
+  return float;
+}
+
+
+// =========================
+// Vignette
+// =========================
+
+function addVignetteFloat(float, width, height) {
+  for (let y = 0; y < height; y++) {
+    const ny = (y / height) * 2 - 1;
+
+    for (let x = 0; x < width; x++) {
+      const nx = (x / width) * 2 - 1;
+
+      const radius = Math.sqrt(nx * nx + ny * ny);
+      const mask = Math.max(0.5, 1 - 0.5 * radius);
+
+      const i = (y * width + x) * 4;
+
+      float[i]     *= mask;
+      float[i + 1] *= mask;
+      float[i + 2] *= mask;
+    }
+  }
+
+  return float;
+}
 
 // =========================
 // DOWNLOAD
