@@ -10,19 +10,6 @@ const filteredCanvas = document.getElementById("filteredCanvas");
 const originalCtx = originalCanvas.getContext("2d");
 const filteredCtx = filteredCanvas.getContext("2d");
 
-
-// =========================
-// CONFIG (future sliders hook here)
-// =========================
-
-const config = {
-  warmth: 1.15,
-  fadeAmount: 0.1,
-  blurRadius: 2,
-  grainStrength: 8,
-  vignetteStrength: 0.4
-};
-
 // =========================
 // BUTTON LOGIC
 // =========================
@@ -98,8 +85,9 @@ function applyLapsify() {
 
   let float = toFloatImage(imageData);
 
-  float = applyWarmToneFloat(float, width, height);
+  float = applyWarmToneFloat(float);
   float = applyFadeFloat(float);
+  float = applyFilmContrast(float); // NEW STEP
   float = gaussianBlurFloat(float, width, height);
   float = addGrainFloat(float);
   float = addVignetteFloat(float, width, height);
@@ -136,19 +124,21 @@ function fromFloatImage(float, imageData) {
 // Warm tone
 // =========================
 
-function applyWarmToneFloat(float, width, height) {
+function applyWarmToneFloat(float) {
   for (let i = 0; i < float.length; i += 4) {
     const r = float[i];
     const g = float[i + 1];
     const b = float[i + 2];
 
-    float[i]     = 1.05 * r + 0.02 * g;
-    float[i + 1] = g;
-    float[i + 2] = 0.02 * g + 0.95 * b;
+    // slightly stronger warm matrix
+    float[i]     = 1.08 * r + 0.03 * g;
+    float[i + 1] = g * 1.01;
+    float[i + 2] = 0.03 * g + 0.92 * b;
   }
 
   return float;
 }
+
 
 
 // =========================
@@ -157,14 +147,38 @@ function applyWarmToneFloat(float, width, height) {
 
 function applyFadeFloat(float) {
   for (let i = 0; i < float.length; i += 4) {
-    float[i]     = float[i] * 0.85 + 0.08;
-    float[i + 1] = float[i + 1] * 0.85 + 0.08;
-    float[i + 2] = float[i + 2] * 0.85 + 0.08;
+    float[i]     = float[i] * 0.9 + 0.05;
+    float[i + 1] = float[i + 1] * 0.9 + 0.05;
+    float[i + 2] = float[i + 2] * 0.9 + 0.05;
   }
 
   return float;
 }
 
+
+// =========================
+// Contrast
+// =========================
+
+function applyFilmContrast(float) {
+  const contrast = 1.2; // increase for more pop
+
+  for (let i = 0; i < float.length; i += 4) {
+    for (let c = 0; c < 3; c++) {
+      let v = float[i + c];
+
+      // S-curve contrast around midpoint
+      v = (v - 0.5) * contrast + 0.5;
+
+      // soft highlight rolloff (film-like)
+      v = v * (1.0 - 0.15 * v);
+
+      float[i + c] = Math.min(1, Math.max(0, v));
+    }
+  }
+
+  return float;
+}
 
 // =========================
 // Gaussian blur
