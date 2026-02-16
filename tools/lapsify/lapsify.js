@@ -49,6 +49,7 @@ hiddenInput.addEventListener("change", event => {
 
   if (initialUploadBtn) initialUploadBtn.classList.add("hidden");
   actionsPanel.classList.remove("hidden");
+  document.getElementById('lapsify-comparison').classList.remove('hidden');
 
   const img = new Image();
 

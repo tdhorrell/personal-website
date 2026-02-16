@@ -1,14 +1,18 @@
-/* TODO 
-1. Vertical, centered stacking of before/after images for lapsify
-2. Horizontal on desktop
-3. Adjust any buttons not covered by standard styles .css
-4. Add handrawn border frames for images
-*/
+/* lapsify.css */
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-height: 100vh;
+}
 
 .lapsify {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    gap: 1rem;
 }
 
 .lapsify-comparison {
@@ -16,25 +20,61 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    min-height: 0;
 }
 
-.lapsify-original-image, .lapsify-filtered-image {
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin: 0;
+}
+
+.lapsify-original-image, 
+.lapsify-filtered-image {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    min-height: 0;
 }
 
 .lapsify-canvas {
     width: 100%;
-    height: 200px;
+    height: auto;
+    max-height: 50vh;
     object-fit: contain;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
 .lapsify-actions {
     display: flex;
-    justify-content: space-between;
-    width: 100%
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.lapsify-primary-button, .lapsify-secondary-button, .lapsify-download-button, .lapsify-home-button{
+  display: inline-block;
+  padding: 10px 10px;
+  background: transparent;
+  color: var(--color-charcoal);
+  text-decoration: none;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  box-shadow: 0px 0px 2px 2px rgba(40, 40, 40, 0.7), 5px 5px 4px 0px rgba(40, 40, 40, 0.3);
+  transition: background-color 0.2s ease;
+}
+
+.lapsify-primary-button:hover, .lapsify-secondary-button:hover, .lapsify-download-button:hover, .lapsify-home-button:hover {
+  background-color: rgba(40, 40, 40, 0.05);
+  text-decoration: none;
+}
+
+.site-footer {
+    flex-shrink: 0;
 }
 
 /* utility class to hide elements */
@@ -46,5 +86,17 @@
     .lapsify-comparison {
         flex-direction: row;
         justify-content: space-evenly;
+        align-items: stretch; /* Make both sides equal height */
+        gap: 2rem;
+    }
+
+    .lapsify-original-image, 
+    .lapsify-filtered-image {
+        height: 100%;
+    }
+
+    .lapsify-canvas {
+        max-height: 60vh; /* Allow much larger images on desktop */
+        height: auto;
     }
 }

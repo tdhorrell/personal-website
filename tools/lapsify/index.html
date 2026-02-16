@@ -34,33 +34,26 @@
             select an image
         </button>
 
-        <div class="lapsify-comparison">
-            <div class="lapsify-original-image">
-                <h3>original</h3>
-                <canvas id="originalCanvas" class="lapsify-canvas"></canvas>
+        <div class="editor-container">
+            <div id="lapsify-comparison" class="lapsify-comparison hidden">
+                <div class="lapsify-original-image">
+                    <h3>original</h3>
+                    <canvas id="originalCanvas" class="lapsify-canvas"></canvas>
+                </div>
+                <div class="lapsify-filtered-image">
+                    <h3>lapsified</h3>
+                    <canvas id="filteredCanvas" class="lapsify-canvas"></canvas>
+                </div>
             </div>
-            <div class="lapsify-filtered-image">
-                <h3>lapsified</h3>
-                <canvas id="filteredCanvas" class="lapsify-canvas"></canvas>
+
+            <div class="lapsify-actions hidden">
+                <button id="download" class="lapsify-download-button">download</button>
+                <button id="upload-new-button" class="lapsify-secondary-button">upload new</button>
+                <a href="../../index.html" class="lapsify-home-button">
+                    go home →
+                </a>
             </div>
         </div>
-
-        <div class="lapsify-actions hidden">
-            <button id="download">download</button>
-            <button id="upload-new-button" class="lapsify-secondary-button">upload new</button>
-            <a href="../../index.html" class="lapsify-home-button">
-                go home →
-            </a>
-        </div>
-    </section>
-
-    <section id="contact" class="contact content">
-        <h2>contact</h2>
-        <ul class="contact-links">
-            <li><a href="https://github.com/tdhorrell" target="_blank" rel="noopener noreferrer">Github</a></li>
-            <li><a href="https://www.linkedin.com/in/timothy-horrell" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-            <li><a href="mailto:td.horrell11@gmail.com">Email</a></li>
-        </ul>
     </section>
 
     <footer class="site-footer">
