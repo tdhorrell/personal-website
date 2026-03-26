@@ -23,6 +23,10 @@ html {
 }
 
 /* Base Styles */
+.logo a:hover {
+    text-decoration: none;
+}
+
 body {
     font-size: 1.6rem;
     font-family: var(--font-main);
